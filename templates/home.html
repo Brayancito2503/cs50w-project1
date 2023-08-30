@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{%block heading%}
+
+<h1></h1>
+
+{%endblock%}
+
+
+
+
+{%block body%}
+{{warning}}
+<br><br><br><br>
+<container>
+<div id="info_div">
+<center>
+<h1>{{book.title}}</h1>
+<br><br>
+</center>
+<center>
+<table class="table">
+    <thead class="table-light">
+        <tr>
+            <th scope="col">Titulo</th>
+            <th scope="col">Autor</th>
+            <th scope="col">Descripcion</th>
+        </tr>
+      
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{book.titulo}}</td>
+            <td>{{book.autores}}</td>
+            <td>{{book.descripcion}}</td>
+        <tr>
+    </tbody>
+
+
+</table>
+</center>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h5 style="margin-left:25px;">Write A Review</h1>
+
+
+
+<container>
+
+{% endblock %}
