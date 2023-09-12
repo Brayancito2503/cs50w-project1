@@ -1,53 +1,55 @@
 {% extends "layout.html" %}
+{% block Usuario%}{{nombre}}{% endblock %}
+{% block titulo %}libros{% endblock %}
 {%block heading%}
-
-<h1></h1>
-
 {%endblock%}
 
 
+{% block body %}
+{% if session.user_id %}
+    {{ warning }}
 
+    <container>
+        <div id="info_div">
+            <center>
+                <br><br>
+                <br><br>
+            </center>
+            <center>
+                <form action="/home" method="post">
+                    <h2>Buscar un libro</h2>
 
-{%block body%}
-{{warning}}
-<br><br><br><br>
-<container>
-<div id="info_div">
-<center>
-<h1>{{book.title}}</h1>
-<br><br>
-</center>
-<center>
-<table class="table">
-    <thead class="table-light">
-        <tr>
-            <th scope="col">Titulo</th>
-            <th scope="col">Autor</th>
-            <th scope="col">Descripcion</th>
-        </tr>
-      
-    </thead>
-    <tbody>
-        <tr>
-            <td>{{book.titulo}}</td>
-            <td>{{book.autores}}</td>
-            <td>{{book.descripcion}}</td>
-        <tr>
-    </tbody>
+                    <div class="input-group w-50 mb-3">
+                        <input type="text" name="busqueda" class="form-control" placeholder="ISBN de el libro, el título de el libro, o el autor de un libro" aria-label="Recipient's username" type="text" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+                    </div>
+                </form>
+            </center>
+        </div>
+    </container>
 
+    {% if libros %}
+        <center>
+            <div class="row">
+                {% for libro in libros %}
+                    <div class="col-12 col-md-2 col-sm-6">
+                        <div class="card" >
+                            <img src="{{ libro.imagen }}" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ libro.titulo }}</h5>
+                                <p class="card-text">{{ libro.autor }}</p>
+                                <a href="{{url_for('infoLibro',idlibro=libro.idlibro)}}" class="btn btn-primary">Mas información</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </center>
+    {% else %}
+        <h1 class="text-center">No se encontraron resultados...</h1>
+    {% endif %}
 
-</table>
-</center>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<h5 style="margin-left:25px;">Write A Review</h1>
-
-
-
-<container>
-
+{% else %}
+    <h1 class="text-center">Busca algo...</h1>
+{% endif %}
 {% endblock %}

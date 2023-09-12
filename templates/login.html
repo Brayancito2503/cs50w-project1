@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block titulo %}Inicio de sesion{% endblock %}
+
 {%block body%}
 <br>
 <br>
@@ -15,15 +17,17 @@
 {% endif %}
 
 <center>
-<h3>Login</h3>
+<h3>Inicio de sesion</h3>
 <form action="/login" method="post">
      <div class="form-group">
-         <input style="width:300px;" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+         <input style="width:300px;" autocomplete="off" autofocus class="form-control" name="username" placeholder="Usuario" type="text">
      </div>
+     <br>
      <div class="form-group">
-         <input style="width:300px;" class="form-control" name="password" placeholder="Password" type="password">
+         <input style="width:300px;" class="form-control" name="password" placeholder="Contraseña" type="password">
      </div>
-     <button id="login_button" type="submit">Log In</button>
+     <br>
+     <button id="login_button" type="submit">Iniciar Sesion</button>
  </form>
 </center>
 

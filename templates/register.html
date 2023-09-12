@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 
+
+{% block titulo %}Registro{% endblock %}
+
 {%block body%}
 <br>
 <br>
@@ -15,18 +18,21 @@
 {% endif %}
 
 <center>
-<h3>Register</h3>
+<h3>Registrarse</h3>
 <form action="/register" method="post">
      <div class="form-group">
-         <input style="width:300px;" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+         <input style="width:300px;" autocomplete="off" autofocus class="form-control" name="username" placeholder="Usuario" type="text">
      </div>
+     <br>
      <div class="form-group">
-         <input style="width:300px;" class="form-control" name="password" placeholder="Password" type="password">
+         <input style="width:300px;" class="form-control" name="password" placeholder="Contraseña" type="password">
      </div>
+     <br>
      <div class="form-group">
-        <input style="width:300px;" class="form-control" name="confirm_password" placeholder="Confirm Password" type="password">
+        <input style="width:300px;" class="form-control" name="confirm_password" placeholder="Confirmar Contraseña" type="password">
     </div>
-     <button id="login_button" type="submit">Log In</button>
+    <br>
+     <button id="login_button" type="submit">Registrarse</button>
  </form>
 </center>
 

@@ -4,29 +4,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles.css">
     {% block CSSpersonalizado %} {% endblock %}
     <meta charset="utf-8">
-    <title>Book Selector</title>
+    <title>{% block titulo %}{% endblock %}</title>
   </head>
   <body>
     {% if session.user_id %}
-<div id="header_div">
-
-      <h1 id="menu_header"></h1>
-      <button id="menu_button" style="float: right;" onclick="window.location.href ='/logout';">Logout</button>
-      <button id="menu_button" style="float: right;" onclick="window.location.href ='/search';">Search</button>
-
+    <nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed z-3 w-100 d-flex justify-content-between">
+      <div class="container ">
+        <a class="navbar-brand" href="/home">BOOK</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navegacion justify-content-end links" id="navbarNavAltMarkup">
+          <ul class="navbar-nav d-flex justify-content-center">
+            <!-- <li class="nav-item">
+              <a class="nav-link nav__link" href="#">Ubicacion</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav__link" href="#">Menu</a>
+            </li> -->
+            <li class="nav-item">
+              <p class="nav-link nav__link">Bienvenido {% block Usuario%}{% endblock %}</p>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link nav__link" href="/home">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav__link" href="/search">Buscar un libro</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link nav__link" href="/logout">Salir</a>
+            </li>
+          </ul>
+        </div>
       </div>
+    </nav>
 
 {% else %}
-<div id="header_div">
-
-    <h1 id="menu_header"></h1>
-    <button id="menu_button" style="float: right;" onclick="window.location.href ='/';">Login</button>
-    <button id="menu_button" style="float: right;" onclick="window.location.href ='/register';">Register</button>
-    <button id="menu_button" style="float: right;" onclick="window.location.href ='/search';">Search</button>
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed z-3 w-100 d-flex justify-content-between">
+  <div class="container ">
+    <a class="navbar-brand" href="./index.html">BOOK</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse navegacion justify-content-end links" id="navbarNavAltMarkup">
+      <ul class="navbar-nav d-flex justify-content-center">
+        <!-- <li class="nav-item">
+          <a class="nav-link nav__link" href="#">Ubicacion</a>
+        </li>-->
+        <li class="nav-item">
+          <a class="nav-link nav__link" href="/">Iniciar sesion</a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link nav__link" href="/register">Registrarse</a>
+        </li>
+        <!-- <li class="nav-item active">
+          <a class="nav-link nav__link" href="/search">Buscar</a>
+        </li> -->
+      </ul>
     </div>
+  </div>
+</nav>
 
 {% endif %}
 
