@@ -10,76 +10,92 @@
 
 {%block body%}
 {{warning}}
+
 <br><br><br><br>
-<container>
-<div id="info_div">
 <center>
-<h1>{{book.titulo}}</h1>
-<br><br>
-</center>
-<table style="margin-left:25px;width:40%; float:left">
-<tr>
-  <th>Author:</th>
-  <th>{{ book.autor }}</th>
-</tr>
-
-<tr>
-  <th>ISBN:</th>
-  <th>{{book.isbn}}</th>
-</tr>
-<tr>
-  <th>Year:</th>
-  <th>{{book.year}}</th>
-<tr>
-
-<table style="margin-left:20px;width:40%; float:right">
-<tr>
-  <th>Number of Ratings:</th>
-  <th>{{GoodRd_work_ratings_count}}</th>
-</tr>
-<tr>
-  <th>Rating:</th>
-  <th>{{GoodRd_average_rating}}</th>
-<tr>
-</table>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<h5 style="margin-left:25px;">Write A Review</h1>
-<form action="/resenia" method="post" style="margin-left:25px;">
- <div class="form-group">
-     <input style="height:75px;width:600px;" autocomplete="off" autofocus class="form-control" name="book_comment" placeholder="Write a review..." type="text">
- </div>
- <!--REFERENCE: Star Rating System: https://codepen.io/jamesbarnett/pen/vlpkh-->
- <fieldset class="rating">
-    <input type="hidden" value="{{ book.book_id }}" name="book_id">
-    <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="5 Estrellas"></label>
-    <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="4 Estrellas"></label>
-    <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="3 Estrellas"></label>
-    <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="2 Estrellas"></label>
-    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="1 Estrella"></label>
-</fieldset>
-
-<button id="review_button" style="margin-left:275px;" type="submit">Submit Review</button>
-</form>
-<h6 style="margin-left:25px;">Only One Review Per User</h6>
-<table class="table is-striped is-fullwidth" style="width: 50%;">
-{% for comment in comments %}
-<tr>
-    <th>Rating: {{comment.rating}}</th>
-    <th>{{comment.comment}}</th>
-</tr>
-{% endfor %}
-</table>
-
-</div>
-
-
-
 <container>
+  <h1>{{book.titulo}}</h1>
+    <div class="row">
+
+    <div class="col-12 col-md-6"">
+      <img src="{{ book.imagen }}" alt="..."> </th>
+    </div>
+    <div class="col-12 col-md-6"">
+        <div class="d-flex justify-content-between" style="margin: 0 10%;">
+          <h4>Author:</h4>
+          <h5>{{ book.autor }}</h5>
+        </div>
+        <div class="d-flex justify-content-between" style="margin: 0 10%;">
+          <h4>ISBN:</h4>
+          <h5>{{book.isbn}}</h5>
+        </div>
+        <div class="d-flex justify-content-between" style="margin: 0 10%;">
+          <h4>Year:</h4>
+          <h5>{{book.year}}</h5>
+        </div>
+        <div class="d-flex justify-content-between" style="margin: 0 10%;">
+          <h4> Nº de reseñas:</h4>
+          <h5>{{GoodRd_work_ratings_count}}</h5>
+        </div>
+        <div class="d-flex justify-content-between" style="margin: 0 10%;">
+          <h4>Puntuacion:</h4>
+          <h5>{{GoodRd_average_rating}}</h5>
+        </div>
+        
+    </div>
+
+    </div>
+
+
+
+    <br><br>
+    </center>
+
+    <center>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h5 style="margin-left:25px;">Escribe una reseña</h1>
+    <form action="/resenia" method="post" class="formularioResenia">
+    <div class="form-group w-75">
+        <input autocomplete="off" autofocus class="form-control" name="book_comment" placeholder="escribe una reseña..." type="text">
+    </div>
+    <!--REFERENCE: Star Rating System: https://codepen.io/jamesbarnett/pen/vlpkh-->
+
+      <fieldset class="rating">
+        <input type="hidden" value="{{ book.idlibro }}" name="book_id">
+        <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="5 Estrellas"></label>
+        <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="4 Estrellas"></label>
+        <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="3 Estrellas"></label>
+        <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="2 Estrellas"></label>
+        <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="1 Estrella"></label>
+      </fieldset>
+
+    <button id="review_button" type="submit">Enviar reseña</button>
+    </form>
+    <h6 style="margin-left:25px;">Solo una reseña por persona</h6>
+    {% if comments %}
+
+      {% for comment in comments %}
+      <div class="">
+        <h4>puntaje: {{comment.puntaje}}</h4>
+        <h4 >reseña de {{comment.nombre}}: {{comment.resenian}}</h4>
+      </div>
+      {% endfor %}
+
+
+    {% else %}
+    <div>
+
+    </div>
+    {% endif%}
+    </center>
+
+    </center>
+
+</container>
 
 {% endblock %}

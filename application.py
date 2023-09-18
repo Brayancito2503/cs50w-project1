@@ -50,12 +50,13 @@ class BOOK:
             self.autor = self.autor + " and more"
 
 class Resenia:
-    def __init__(self, idresenia, idusuario, resenia, puntaje, idlibro):
+    def __init__(self, idresenia, idusuario, resenian, puntaje, idlibro, nombre):
         self.idresenia = idresenia
         self.idusuario = idusuario
-        self.resenia = resenia
+        self.resenian = resenian
         self.puntaje = puntaje
         self.idlibro = idlibro
+        self.nombre = nombre
 
 @app.route("/")
 def index():
@@ -270,8 +271,6 @@ def infoLibro(idlibro):
     print(idlibro,isbn, titulo, autor, anio, year)
     
     response = requests.get("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn).json()
-
-    
     
     libro = {}  # Initialize libro as an empty dictionary    
     if 'items' in response:
@@ -284,12 +283,20 @@ def infoLibro(idlibro):
     if 'description' in libro:
         descripcion_libro = libro['description']
     cur_book = BOOK(isbn, titulo, autor, year, idlibro,imagen_libro)
-    query = text("SELECT r.IdResenia, r.idUsuario, r.resenian, r.puntaje, r.idlibro FROM resenias r INNER JOIN libros l ON l.idlibro = r.idlibro WHERE l.idlibro = :idlibro")
+    query = text("SELECT r.IdResenia, r.idUsuario, r.resenian, r.puntaje, r.idlibro, u.nombre FROM resenias r INNER JOIN libros l ON l.idlibro = r.idlibro INNER JOIN usuarios u on r.idusuario = u.idusuario WHERE l.idlibro = :idlibro")
 
     resenias = db.execute(query, {"idlibro" : idlibro}).fetchall()
     comentarios=[]
-    for IdResenia, idUsuario, resenian, puntaje, idlibro in resenias:
-        resenia_nueva = Resenia(IdResenia, idUsuario, resenian, puntaje, idlibro)
+
+    puntaje = resenias
+    print("asdasd")
+    print(puntaje)
+    print("asdasd")
+    print(resenias)
+    print("asdasd")
+    for IdResenia, idUsuario, resenian, puntaje, idlibro, nombre in resenias:
+        print( IdResenia, idUsuario, resenian, puntaje, idlibro)
+        resenia_nueva = Resenia(IdResenia, idUsuario, resenian, puntaje, idlibro, nombre)
         comentarios.append(resenia_nueva)
 
     res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"isbns": cur_book.isbn})
@@ -310,10 +317,12 @@ def post_comment():
         idlibro = request.form.get("book_id")
         resenian=request.form.get("book_comment")
         puntaje = float(request.form.get("rating"))
-        #----------------------------------------CHECK TO ENSURE ONLY ONE REVIEW PER USER FOR EACH BOOK
-        check = db.execute("SELECT * FROM resenias WHERE idUsuario = :idUsuario AND idlibro = :idlibro",{"idUsuario":idUsuario, "idlibro":idlibro}).fetchone()
+
+        query = text("SELECT * FROM resenias WHERE idUsuario = :idUsuario AND idlibro = :idlibro")
+        check = db.execute(query,{"idUsuario":idUsuario, "idlibro":idlibro}).fetchone()
         if check==None:
-            db.execute("INSERT INTO resenias (idUsuario, resenian, puntaje, idlibro) VALUES (:idUsuario, :resenian, :puntaje, :idlibro)",{"idUsuario":id_user, "resenian":resenian, "puntaje":puntaje, "idlibro":idlibro})
+            query = text("INSERT INTO resenias (idUsuario, resenian, puntaje, idlibro) VALUES (:idUsuario, :resenian, :puntaje, :idlibro)")
+            db.execute(query,{"idUsuario":idUsuario, "resenian":resenian, "puntaje":puntaje, "idlibro":idlibro})
             db.commit()
         else:
             flash("Solo puede hacer una reseña por libro")
