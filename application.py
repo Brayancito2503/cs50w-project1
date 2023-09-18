@@ -272,13 +272,13 @@ def infoLibro(idlibro):
     
     response = requests.get("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn).json()
     
-    libro = {}  # Initialize libro as an empty dictionary    
+    libro = {}    
     if 'items' in response:
         for item in response['items']:
             libro = item.get("volumeInfo", {})
             if 'imageLinks' in libro:
                 imagen_libro = libro['imageLinks'].get('thumbnail', None)
-                break  # Sal del bucle cuando encuentres una imagen válida
+                break  # Sale del bucle cuando encuentra una imagen válida
     
     if 'description' in libro:
         descripcion_libro = libro['description']
@@ -305,10 +305,10 @@ def infoLibro(idlibro):
     if res.status_code != 200:
         raise Exception("ERROR: API request unsuccessful.")
     good_read = res.json()
-    GoodRd_average_rating = float(good_read['books'][0]['average_rating'])
-    GoodRd_work_ratings_count = float(good_read['books'][0]['work_ratings_count'])
+    promedioResenia = float(good_read['books'][0]['average_rating'])
+    contadorPuntos = float(good_read['books'][0]['work_ratings_count'])
     print("antes del render")
-    return render_template("infoLibro.html", book = cur_book, comments = comentarios, GoodRd_average_rating = GoodRd_average_rating, GoodRd_work_ratings_count = GoodRd_work_ratings_count)
+    return render_template("infoLibro.html", book = cur_book, comments = comentarios, promedioResenia = promedioResenia, contadorPuntos = contadorPuntos, nombre= session['nombre'])
 
 @app.route("/resenia", methods=["POST"])
 def post_comment():
