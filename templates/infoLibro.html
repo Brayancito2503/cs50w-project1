@@ -11,55 +11,51 @@
 
 
 {%block body%}
+{% if session.user_id %}
 {{warning}}
 
 <br><br><br><br>
 <center>
 <container>
   <h1>{{book.titulo}}</h1>
-    <div class="row">
+    <div class="row" >
+      <div class="col-12 col-md-6 d-flex justify-content-center h-100">
+          <img src="{{ book.imagen }}" class="card-img-top h-75" style="width: 30%;" alt="...">
+      </div>
+      <div class="col-12 col-md-6 ">
+          <div class="d-flex justify-content-between" style="margin: 0 10%;">
+            <h4>Author:</h4>
+            <h5>{{ book.autor }}</h5>
+          </div>
+          <div class="d-flex justify-content-between" style="margin: 0 10%;">
+            <h4>ISBN:</h4>
+            <h5>{{book.isbn}}</h5>
+          </div>
+          <div class="d-flex justify-content-between" style="margin: 0 10%;">
+            <h4>Year:</h4>
+            <h5>{{book.year}}</h5>
+          </div>
+          <div class="d-flex justify-content-between" style="margin: 0 10%;">
+            <h4> Nº de reseñas:</h4>
+            <h5>{{contadorPuntos}}</h5>
+          </div>
+          <div class="d-flex justify-content-between" style="margin: 0 10%;">
+            <h4>Puntuacion:</h4>
+            <h5>{{promedioResenia}}</h5>
+          </div>
+          
+      </div>
 
-    <div class="col-12 col-md-6"">
-      <img src="{{ book.imagen }}" alt="..."> </th>
     </div>
-    <div class="col-12 col-md-6"">
-        <div class="d-flex justify-content-between" style="margin: 0 10%;">
-          <h4>Author:</h4>
-          <h5>{{ book.autor }}</h5>
-        </div>
-        <div class="d-flex justify-content-between" style="margin: 0 10%;">
-          <h4>ISBN:</h4>
-          <h5>{{book.isbn}}</h5>
-        </div>
-        <div class="d-flex justify-content-between" style="margin: 0 10%;">
-          <h4>Year:</h4>
-          <h5>{{book.year}}</h5>
-        </div>
-        <div class="d-flex justify-content-between" style="margin: 0 10%;">
-          <h4> Nº de reseñas:</h4>
-          <h5>{{contadorPuntos}}</h5>
-        </div>
-        <div class="d-flex justify-content-between" style="margin: 0 10%;">
-          <h4>Puntuacion:</h4>
-          <h5>{{promedioResenia}}</h5>
-        </div>
-        
-    </div>
-
-    </div>
-
-
-
-    <br><br>
     </center>
-
     <center>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    {% if get_flashed_messages() %}
+    <header>
+        <div class="alert alert-primary border text-center" role="alert">
+            {{ get_flashed_messages() | join(" ") }}
+        </div>
+    </header>
+{% endif %}
     <h5 style="margin-left:25px;">Escribe una reseña</h1>
     <form action="/resenia" method="post" class="formularioResenia">
     <div class="form-group w-75">
@@ -78,7 +74,7 @@
 
     <button id="review_button" type="submit">Enviar reseña</button>
     </form>
-    <h6 style="margin-left:25px;">Solo una reseña por persona</h6>
+    
     {% if comments %}
 
       {% for comment in comments %}
@@ -99,5 +95,5 @@
     </center>
 
 </container>
-
+{% endif %}
 {% endblock %}
